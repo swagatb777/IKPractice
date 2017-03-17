@@ -1,0 +1,56 @@
+import java.util.*;
+import java.lang.*;
+class FinalResult
+{
+	int maxSum;
+	char[] maxPath;
+	FinalResult(int l)
+	{
+       maxSum=Integer.MIN_VALUE;
+       maxPath = new char[l];	
+	}
+}
+public class Solution
+{
+    public static void getMaxPath(int[][] matrix, int row, int col, int rSum, char[] rPath, int w, FinalResult res)
+    {
+       if((row==matrix.length-1) && (col==matrix[0].length-1))
+       {
+          rSum = rSum + matrix[row][col];
+          if(rSum>res.maxSum)
+          {
+             res.maxSum=rSum;
+             for(int i=0; i<rPath.length; i++)
+               res.maxPath[i] = rPath[i];
+          }
+          return;
+       }
+
+       if((row>=matrix.length)  || (col>=matrix[0].length))
+         return;
+
+       rSum = rSum + matrix[row][col];
+       rPath[w] = 'R';
+       getMaxPath(matrix, row, col+1, rSum, rPath, w+1, res);
+       rPath[w] = 'D';
+       getMaxPath(matrix, row+1, col, rSum, rPath, w+1, res);
+    }
+
+	public static void main(String[] args)
+	{
+        int[][] matrix = {
+        {5, 0, 0, 0},
+        {5, 7, 8, 0},
+        {5, 0, 8, 9},
+        {5, 5, 5, 5}};
+
+        FinalResult res = new FinalResult(matrix.length*2);
+        char[] rPath = new char[matrix.length*2];
+        int rSum = 0;
+        getMaxPath(matrix, 0, 0, rSum, rPath, 0, res);
+
+        System.out.format("\nMaxSum = %d\n", res.maxSum);
+        for(int i=0; i<res.maxPath.length; i++)
+          System.out.format("%c ", res.maxPath[i]);
+	}
+}
