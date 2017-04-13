@@ -1,0 +1,125 @@
+/**
+ * Created by swagatb on 4/11/17.
+ */
+//Graphs homework, Knights tour on chess board
+import java.util.*;
+import java.lang.*;
+public class H7 {
+    static class Coord
+    {
+        int x, y;
+        Coord(int _x, int _y)
+        {
+            x=_x;
+            y=_y;
+        }
+    }
+    static void dfsutil1(int curx, int cury, int endx, int endy, int moves, int[] res, int l, Hashtable<Coord, Boolean> visited)
+    {
+        if(curx==endx && cury==endy)
+        {
+            if(moves<res[0])
+                res[0]=moves;
+            return;
+        }
+
+        if(moves>=l*l)
+            return;
+
+        int xMove[] = { 2, 1, -1, -2, -2, -1,  1,  2 };
+        int yMove[] = { 1, 2,  2,  1, -1, -2, -2, -1 };
+
+        visited.put(new Coord(curx, cury), true);
+
+
+        for(int k=0; k<xMove.length; k++)
+        {
+            int next_x = curx + xMove[k];
+            int next_y = cury + yMove[k];
+            if (next_x >= 0 && next_x < l && next_y >= 0 && next_y < l)
+            {
+                Coord temp = new Coord(next_x, next_y);
+                if(!checkIfVisited(visited, temp))
+                {
+                    dfsutil1(next_x, next_y, endx, endy, moves + 1, res, l, visited);
+                }
+
+            }
+
+        }
+
+        visited.put(new Coord(curx, cury), false);
+    }
+    static int dfs(int startx, int starty, int endx, int endy, int l)
+    {
+        int[] res= {Integer.MAX_VALUE};
+        Hashtable<Coord, Boolean> visited = new Hashtable<Coord, Boolean>();
+        dfsutil1(startx, starty, endx, endy, 0, res, l, visited);
+        return res[0];
+    }
+    static boolean checkIfVisited(Hashtable<Coord, Boolean> hTable, Coord temp)
+    {
+        for(Coord key: hTable.keySet())
+        {
+            if(key.x==temp.x && key.y==temp.y)
+                return true;
+        }
+        return false;
+    }
+    static int bfs(int startx, int starty, int endx, int endy, int l)
+    {
+        Coord src = new Coord(startx, starty);
+        LinkedList<Coord> qList = new LinkedList<Coord>();
+        qList.addLast(src);
+        int level=0;
+        LinkedList<Coord> cList = new LinkedList<Coord>(); //contains the children
+        int xMove[] = { 2, 1, -1, -2, -2, -1,  1,  2 };
+        int yMove[] = { 1, 2,  2,  1, -1, -2, -2, -1 };
+        Hashtable<Coord, Boolean> visited = new Hashtable<Coord, Boolean>();
+
+        while(!qList.isEmpty())
+        {
+            Coord t = qList.pollFirst();
+            if(t.x==endx && t.y==endy)
+                return level;
+            int curX = t.x;
+            int curY = t.y;
+            for(int k=0; k<xMove.length; k++)
+            {
+                int next_x = curX + xMove[k];
+                int next_y = curY + yMove[k];
+                if (next_x >= 0 && next_x < l && next_y >= 0 && next_y < l)
+                {
+                    Coord temp = new Coord(next_x, next_y);
+                    if(!checkIfVisited(visited, temp))
+                    {
+                        visited.put(temp, true);
+                        cList.addLast(temp);
+                    }
+                }
+            }
+
+            if(qList.isEmpty())
+            {
+                level++;
+                for(Coord c:cList)
+                    qList.add(c);
+                cList = new LinkedList<Coord>();
+            }
+
+        }
+        return level;
+    }
+
+    public static void main(String[] args)
+    {
+        int rows=8;
+        int cols=8;
+        int startx=0;
+        int starty=0;
+        int endx=7;
+        int endy=7;
+        System.out.format("Minimum Moves using bfs - %d", bfs(startx, starty, endx, endy, rows));
+        System.out.format("\nMinimum Moves using dfs- %d", dfs(startx, starty, endx, endy, rows));
+    }
+}
