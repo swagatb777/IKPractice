@@ -1,0 +1,115 @@
+import java.util.*;
+import java.lang.*;
+public class Solution
+{
+    static void printTopElement(Integer[] stk1, Integer[] stk2, Integer[] l)
+    {
+        if(l[0]<0)
+        {
+            System.out.format("EMPTY\n");
+            return;
+        }
+        System.out.format("%d\n", stk1[l[0]] + stk2[l[0]]);
+    }
+    static void mergeStack2(Integer[] stk2, Integer[] l)
+    {
+        int top = stk2[l[0]];
+        l[0]=l[0]-1;
+        if(l[0]>=0)
+        {
+            stk2[l[0]] = top + stk2[l[0]];
+        }
+    }
+    static void superStack(String[] operations)
+    {
+        Integer[] stk1 = new Integer[500];
+        Integer[] stk2 = new Integer[500];
+        Integer[] l = new Integer[1];
+        l[0] = -1;
+        for(String operation : operations)
+        {
+            switch (operation.split("\\s+")[0])
+            {
+                case "push":
+                    int val = Integer.parseInt(operation.split("\\s+")[1]);
+                    l[0]=l[0]+1;
+                    stk1[l[0]]=val;
+                    stk2[l[0]]=0;
+                    printTopElement(stk1, stk2, l);
+                    break;
+                case "pop":
+                    mergeStack2(stk2, l);
+                    printTopElement(stk1, stk2, l);
+                    break;
+                default:
+                    int e = Integer.parseInt(operation.split("\\s+")[1]);
+                    int k = Integer.parseInt(operation.split("\\s+")[2]);
+                    int count = e-1;
+                    int val1 = stk2[count] + k;
+                    stk2[count] = val1;
+                    printTopElement(stk1, stk2, l);
+                    break;
+            }
+        }
+    }
+
+    public static void main(String[] args)
+    {
+        
+        String[] operations = {"push 4",
+        "pop",
+        "push 3",
+        "push 5",
+        "push 2",
+        "inc 3 1",
+        "pop",
+        "push 1",
+        "inc 2 2",
+        "push 4",
+        "pop", "pop"};
+
+        /*String[] operations = {"push -36",
+                "push 20",
+                "pop",
+                "push -9",
+                "pop",
+                "push -53",
+                "pop",
+                "inc 1 -17"};*/
+
+        /*push 15
+        pop
+        push -51
+        pop
+        push 41
+        pop
+        push -76
+        push 51
+        push -10
+        inc 1 -49
+
+        String[] operations = {"push 15",
+                "pop",
+                "push -51",
+                "pop",
+                "push 41",
+                "pop",
+                "push -76",
+                "push 51",
+                "push -10",
+                "inc 1 -49"
+        };*/
+
+
+
+        long startTime = System.nanoTime();
+        superStack(operations);
+        long endTime = System.nanoTime();
+        System.out.println("\nSuperStack took " + (endTime - startTime));
+
+
+
+
+
+    }
+}
