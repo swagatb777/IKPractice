@@ -1,0 +1,52 @@
+/**
+ * Created by swagatb on 5/7/17.
+ */
+import java.util.*;
+import java.lang.*;
+public class H44 {
+    static int getLastDot(StringBuilder sb)
+    {
+        int index = -1;
+        for(int i=sb.length()-1; i>=0; i--)
+        {
+            if(sb.charAt(i)=='.')
+                return i;
+        }
+        return index;
+    }
+    static boolean isValidOctet(String s)
+    {
+        Integer a = Integer.parseInt(s);
+        if(a>=0 && a<=255)
+            return true;
+        return false;
+    }
+    static void printAllIPAddress(StringBuilder sb, int octet)
+    {
+        int indexOfLastDot = getLastDot(sb);
+        if(octet==3)
+        {
+            if(isValidOctet(sb.substring(indexOfLastDot+1)))
+            {
+                System.out.format("\n%s", sb.toString());
+            }
+            return;
+        }
+
+        for(int i=indexOfLastDot+1; i<=indexOfLastDot+3; i++)
+        {
+            if( (i<sb.length()-1) && (isValidOctet(sb.substring(indexOfLastDot+1, i+1))) )
+            {
+                printAllIPAddress(sb.insert(i+1, '.'), octet+1);
+                sb.deleteCharAt(i+1);
+            }
+        }
+    }
+    public static void main(String[] args)
+    {
+        //String ipAddress = "2115622211";
+        String ipAddress = "1111";
+        StringBuilder sb = new StringBuilder(ipAddress);
+        printAllIPAddress(sb, 0);
+    }
+}
