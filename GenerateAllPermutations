@@ -1,0 +1,42 @@
+/**
+ * Created by swagatb on 5/7/17.
+ */
+import java.util.*;
+import java.lang.*;
+public class H45 {
+    static void swap(int[] array, int a , int b)
+    {
+        int t = array[a];
+        array[a] = array[b];
+        array[b] = t;
+    }
+    static void printAllPermutations(int[] array, int r)
+    {
+        /*
+        No. of permutations = npr 4p4 = 4!/0! = 24
+        Time complexity = n!*n
+         Work is done only by the leaves. And there
+         are n! leaves, n is needed for printing
+         Space Complexity is O(n)
+
+         */
+        if(r==array.length)
+        {
+            System.out.println();
+            for(int i=0; i<array.length; i++)
+                System.out.format("%d", array[i]);
+            return;
+        }
+        for(int i=r; i<array.length; i++)
+        {
+            swap(array, r, i);
+            printAllPermutations(array, r+1);
+            swap(array, i, r);
+        }
+    }
+    public static void main(String[] args)
+    {
+        int[] array = {1, 2, 3, 4};
+        printAllPermutations(array, 0);
+    }
+}
