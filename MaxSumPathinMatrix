@@ -1,0 +1,82 @@
+/**
+ * Created by swagatb on 5/7/17.
+ */
+import java.util.*;
+import java.lang.*;
+public class H43 {
+    static class Coord
+    {
+        int row;
+        int col;
+        Coord(int _r, int _c)
+        {
+            row=_r;
+            col=_c;
+        }
+    }
+    public static int maxSum1(int[][] grid, int row, int col)
+    {
+        /*
+        Time complexity is exponential
+        degree is 2
+        max Height - n+n = 2n
+        TC = 2^(2n)
+        Space Complexity - 2n
+         */
+        if(row==grid.length-1 && col==grid.length-1)
+            return grid[row][col];
+
+        if(row>=grid.length || col>=grid.length)
+            return Integer.MIN_VALUE;
+
+        return Math.max(maxSum1(grid, row+1, col), maxSum1(grid, row, col+1)) + grid[row][col];
+    }
+    public static void PrintMaxPath(int[][] grid, int row, int col, int rSum, int[] maxSum, ArrayList<Coord> curCoords, ArrayList<Coord> fResult)
+    {
+        if(row==grid.length-1 && col==grid.length-1)
+        {
+            rSum = rSum + grid[row][col];
+            if(rSum > maxSum[0]) {
+                maxSum[0] = rSum;
+                fResult.clear();
+                for(Coord c: curCoords)
+                    fResult.add(c);
+            }
+            return;
+        }
+
+        if(row>=grid.length || col>=grid.length)
+            return;
+
+        rSum = rSum + grid[row][col];
+        Coord c = new Coord(row, col);
+        curCoords.add(c);
+        PrintMaxPath(grid, row + 1, col, rSum, maxSum, curCoords, fResult);
+        PrintMaxPath(grid, row, col+1, rSum, maxSum, curCoords, fResult);
+        curCoords.remove(c);
+
+    }
+    public static void main(String[] args)
+    {
+        int[][] grid =
+                {
+                        {0, 1, 1, 1},
+                        {1, 5, 1, 1},
+                        {2, 7, 8, 1},
+                        {2, 1, 9, 10}
+                };
+
+        System.out.format("\nMax Sum = %d", maxSum1(grid, 0, 0));
+        int[] maxSum = new int[1];
+        maxSum[0] = Integer.MIN_VALUE;
+        ArrayList<Coord> curCoords = new ArrayList<Coord>();
+        ArrayList<Coord> fResult = new ArrayList<Coord>();
+        PrintMaxPath(grid, 0, 0, 0, maxSum, curCoords, fResult);
+        System.out.format("\nMax Sum = %d", maxSum[0]);
+        System.out.format("\nPath is \n");
+        for(Coord c: fResult)
+            System.out.format("(%d, %d)", c.row, c.col);
+
+
+    }
+}
