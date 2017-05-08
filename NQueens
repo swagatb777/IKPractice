@@ -1,0 +1,83 @@
+/**
+ * Created by swagatb on 5/7/17.
+ */
+import java.util.*;
+import java.lang.*;
+public class H47 {
+    static void swap(int[] array, int a , int b)
+    {
+        int t = array[a];
+        array[a] = array[b];
+        array[b] = t;
+    }
+    static boolean diagCheck(int[] array)
+    {
+        for(int i=array.length-1; i>=0; i--)
+        {
+            for(int j=0; j<i; j++)
+            {
+                if( Math.abs(i-j) == Math.abs(array[i] - array[j]) )
+                    return false;
+            }
+        }
+        return true;
+    }
+    public static boolean nQueensPermute(int[] array, int r)
+    {
+        if(r==array.length)
+        {
+            if(diagCheck(array))
+                return true;
+            return false;
+        }
+
+        for(int i=r; i<array.length; i++)
+        {
+            swap(array, r, i);
+            if(nQueensPermute(array, r+1))
+                return true;
+            swap(array, i, r);
+        }
+        return false;
+    }
+    public static boolean nQueens(int n)
+    {
+        int[] array = new int[n];
+        for(int i=0; i<n; i++)
+         array[i] = i;
+        return nQueensPermute(array, 0);
+    }
+    public static void nQueensPrint1(int[] array, int r)
+    {
+        if(r==array.length)
+        {
+            if(diagCheck(array))
+            {
+                System.out.println();
+                for(int i=0; i<array.length; i++)
+                    System.out.format("%d ", array[i]);
+            }
+            return;
+        }
+
+        for(int i=r; i<array.length; i++)
+        {
+            swap(array, r, i);
+            nQueensPrint1(array, r+1);
+            swap(array, i, r);
+        }
+    }
+    public static void nQueensPrint(int n)
+    {
+        int[] array = new int[n];
+        for(int i=0; i<n; i++)
+            array[i] = i;
+        nQueensPrint1(array, 0);
+    }
+    public static void main(String[] args)
+    {
+        int n = 5;
+        System.out.format("Possible - %b", nQueens(n));
+        nQueensPrint(n);
+    }
+}
