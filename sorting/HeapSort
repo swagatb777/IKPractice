@@ -1,0 +1,75 @@
+/**
+ * Created by swagatb on 7/30/17.
+ */
+/*
+
+1) Treat the array as a tree , i has children 2*i+1 and 2*i+2
+2) Min heap - parent is greater than both children
+3) Max heap - parent is smaller than both children
+4) Sort an array in ascending order - create a max heap
+5) swimDown(array, i, n)
+   {
+      max = i;
+      if(2*i+1 < n and array[max] < array[2*i+1])
+        max = 2*i+1
+      if(2*i+2 <n and array[max] < array[2*i+2])
+        max = 2*i+2
+      if(max !=i)
+      {
+        swap(array, i , max)
+        swimDown(array, max, n)
+      }
+   }
+
+   Time complexity is O(lgn)
+
+6) createMaxHeap(array, n)
+   {
+      for(i=n/2; i>=0; i--)
+      {
+         swimDown(array, i, n)
+      }
+   }
+
+   Starts from the right most lowest parent
+
+7) heapSort(array, n)
+   {
+     n=n-1
+     while(n>=0)
+     {
+        swap(array, 0, n)
+        n=n-1
+        swimDown(array, 0, n)
+     }
+   }
+
+7.5) getParent(i)
+     {
+      if(i-1) < 0)
+        return 0
+      return (i-1)/2
+     }
+
+8) swimUp(array, i) // used for insertion operations
+   {
+     int parentIndex = getParent(i)
+     if(array[parentIndex] < array[i])
+     {
+       swap(array, i, parentIndex)
+       swimUp(array, parentIndex)
+     }
+   }
+
+9) Time complexity
+    swimDown operation -> O(lgn)
+    SwimDownoperation is called n times in heapSort()
+    So total TC = nlgn
+
+
+
+ */
+
+
+public class HeapSort {
+}
