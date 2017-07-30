@@ -61,7 +61,7 @@
     recurse           recurse
 
 
-6) TC , worstcase - O(n^2), best case O(lgn),
+6) TC , worstcase - O(n^2), best case O(nlgn),
 7) Space Complexity - O(lgn) in the best case
 8) Not a stable sort
     Consider 5(1), 5(2), 3
