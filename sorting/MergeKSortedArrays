@@ -1,0 +1,64 @@
+/**
+ * Created by swagatb on 7/30/17.
+ */
+/*
+Given K sorted arrays, merge them
+Expected TC -> nklgk
+Below solution creates a minheap of size k
+We go through all the elements (total is nk)
+Each insert and delete operation in a heap is O(lgk)
+So total time complexity is nklgk
+
+ */
+import java.lang.*;
+import java.util.*;
+class Element1{
+    int value;
+    int arrayIndex;
+    int elementIndex;
+    Element1(int _v, int _aI, int _eI)
+    {
+        value = _v;
+        arrayIndex = _aI;
+        elementIndex = _eI;
+    }
+}
+class ElementComparator implements Comparator<Element1>
+{
+    public int compare(Element1 x, Element1 y)
+    {
+        if (x.value < y.value)
+            return -1;
+        if(x.value == y.value)
+            return 0;
+        return +1;
+    }
+}
+public class MergeKSortedArrays {
+
+    public static void main(String[] args)
+    {
+        int[][] array = {
+                {2, 4, 8},
+                {1, 3, 7},
+                {6, 9, 10}
+        };
+        int n=3;
+        int k=3;
+        PriorityQueue<Element1> pQueue = new PriorityQueue<Element1>(k, new ElementComparator());
+        pQueue.add(new Element1(array[0][0], 0, 0));
+        pQueue.add(new Element1(array[1][0], 1, 0));
+        pQueue.add(new Element1(array[2][0], 2, 0));
+
+        while(!pQueue.isEmpty())
+        {
+            Element1 temp = pQueue.poll();
+            System.out.format("%d ", temp.value);
+            if(temp.elementIndex <= array[temp.arrayIndex].length-2)
+            {
+                Element1 temp1 = new Element1(array[temp.arrayIndex][temp.elementIndex+1], temp.arrayIndex, temp.elementIndex+1);
+                pQueue.add(temp1);
+            }
+        }
+    }
+}
