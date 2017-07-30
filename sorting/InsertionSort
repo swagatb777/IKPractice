@@ -1,0 +1,47 @@
+/**
+ * Created by swagatb on 7/30/17.
+ */
+/*
+
+1) After every ith iteration, elemnents from [0,i] are sorted "with respect to each other" and not according to the
+entire array.
+2) Worst case and avg case TC -> O(n^2), Best case TC -> O(n)
+3) Stable sort
+4) Algo:-
+   for(int i=0; i<n; i++)
+   {
+     for(int j=i; j>0; j--)
+     {
+        if(a[j] < a[j-1])
+        {
+          swap(a, j, j-1)
+        }
+        else
+          break;
+     }
+   }
+                    i
+   a0, a1, a2, a3, a4, a5, a6, a7
+   Sorted wrt           Unseen
+   each other
+
+5) Why is best case time complexity - O(n)
+    suppose the array is sorted
+       2 4 8
+    As per the above algo,
+       the inner loop always breaks and never iterates making it a O(n) TC
+
+6) Why is it a stable sort
+     Consider
+          8     5(1) 5(2)
+      1)  5(1) , 8, 5(2)
+      2)  5(1), 5(2), 8
+              We deliberately break the inner loop when the condn (a[j] < a[j-1]) is not true
+              (mark the condition, it is < and not <=)
+
+
+ */
+
+
+public class InsertionSort {
+}
