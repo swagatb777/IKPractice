@@ -1,0 +1,10 @@
+
+1) http://www.geeksforgeeks.org/nuts-bolts-problem-lock-key-problem/
+2) Merge k sorted arrays (https://discuss.leetcode.com/topic/2780/a-java-solution-based-on-priority-queue)
+3) Given an array of +ve ints, group them inplace into even and odd (O(n) soln)
+4) Find k largest elements in a given stream of numbers
+5) 3sum (http://www.programcreek.com/2012/12/leetcode-3sum/)
+6) https://stackoverflow.com/questions/20398799/find-k-nearest-points-to-point-p-in-2-dimensional-plane
+7) Sort all characters in a string (ASCII chars) { O(n)}
+8) https://stackoverflow.com/questions/7153659/find-an-integer-not-among-four-billion-given-ones?rq=1
+9) http://www.geeksforgeeks.org/sort-an-array-of-0s-1s-and-2s/
