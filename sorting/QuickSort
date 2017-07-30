@@ -1,0 +1,76 @@
+/**
+ * Created by swagatb on 7/30/17.
+ */
+/*
+1) Pick a pivot element. All elements less than pivot are on left, all
+   elements greater than pivot are on right. Left and right elements maybe unsorted wrt to each other.
+   The final place where the pivot lands after this is called the parition index
+   Recursively do the same on the left and right of the parition index
+
+2) Qsort(array, low, high)
+   {
+    if(high<=low)
+         return
+    int partitionIndex = findParition(array, low, high)
+    Qsort(array, low, partitionIndex-1)
+    Qsort(array, paritionIndex+1, high)
+   }
+
+3) int findPartition(int[] array, int low, int high)
+   {
+     int pivot = array[low] //random choose pivot. can be improved using a random index function in real case
+     int i=low; j=high
+     while(i<j)
+     {
+        while(array[i]<=pivot and i between [low, high]) // mark <=; <= needed to move forward if pivot == array[i]
+          i++
+        while(array[j]>pivot and j between [low, high])
+          j--;
+        if(i<j)   // We do not want to do this swap when i==j, when i==j we swap j with low
+        {
+          swap(array, i, j)
+        }
+     }
+
+     swap(array, low, j)
+     return j
+   }
+
+4) When all elements are sorted in ascending order
+    [ 1, 2, 3, 4, 6, 7]
+    * pivot = 1
+    * i gets stuck at index(pivot+1)
+    * j gets to 0
+    * terminate inner loop and swap (low, low)
+    * partionindex = low
+    * Example of worstcase paritioning leading to O(n^2) TC
+    *
+
+5) When all elements are sorted in descending order
+    [7, 5, 4, 3, 2, 1]
+    * pivot = 7
+    * i increments till high+1
+    * j= high gets stuck at high
+    * terminate inner loop
+    * swap((7), (1) ) - [1, 5, 4, 3, 2, 7]
+    * return j
+    * Example of worstcase paritioning leading to O(n^2) TC
+
+              pivot 
+    a0 a1      a2     a3 a4 a5
+    recurse           recurse
+
+
+6) TC , worstcase - O(n^2), best case O(lgn),
+7) Space Complexity - O(lgn) in the best case
+8) Not a stable sort
+    Consider 5(1), 5(2), 3
+      j gets stuck at high posn and gets swapped with low
+      3, 5(2), 5(1)
+
+
+
+
+ */
+public class QuickSort {
+}
