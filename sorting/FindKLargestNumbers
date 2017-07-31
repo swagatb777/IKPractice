@@ -1,0 +1,47 @@
+/**
+ * Created by swagatb on 7/30/17.
+ */
+/*
+
+1) Find k largest elements given n numbers
+   Ans:- Use Quick sort partitioning to find the kth largest number. This takes O(n) time complexity.
+         If sorted is needed, sort the numbers from k+1 to n. That will take (n-k)lg(n-k) time complexity
+         If no sorting is reqd, then the solution is O(n)
+
+2) Find k largest numbers given a stream of numbers
+   Ans:- Since the input size is not given, we use a Min heap to store k numbers.
+         If the incoming number is less that top of heap , we drop it else replace the top with this
+         incoming number and perform the swimdown operation
+         *** Building a heap is O(n) time complexity
+
+         time complexity - O(k + ilgk)
+         If the input was defined to be n , it would be O(k + (n-k)lgk)
+         Both the above TCs are assuming, sorting of final result is not needed
+         
+
+Soln
+
+   PriorityQueue<Integer> pQueue = new PriorityQueue<Integer>(k)
+   for(int i=0; i<k; i++)
+     pQueue.add(array[i]);
+
+   for (Integer num: inputStream)
+   {
+      if(num < pQueue.peek())
+       continue
+      else
+       {
+          pQueue.pop();
+          pQueue.add(num);
+       }
+   }
+
+   while(!pQueue.isEmpty())
+   {
+     print pQueue.pop()
+   }
+
+ */
+
+public class FindKLargestElements {
+}
