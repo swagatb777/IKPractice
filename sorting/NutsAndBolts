@@ -1,0 +1,147 @@
+/**
+ * Created by swagatb on 7/30/17.
+ */
+
+/*
+http://www.geeksforgeeks.org/nuts-bolts-problem-lock-key-problem/
+Given a set of n nuts of different sizes and n bolts of different sizes.
+There is a one-one mapping between nuts and bolts. Match nuts and bolts efficiently.
+Constraint: Comparison of a nut to another nut or a bolt to another bolt is not allowed.
+It means nut can only be compared with bolt and bolt can only be compared with nut to see which one is bigger/smaller.
+
+Other way of asking this problem is, given a box with locks and keys where one lock can be opened by one key in the box.
+We need to match the pair.
+
+Soln1
+Brute force - O(n^2)
+Sample below
+Take nut[i]
+Compare with every bolt[j]
+for (int i=0; i<n; i++)
+{
+  for(int j=i; j<n; j++)
+  {
+   if f(nut[i], bolt[j])
+     break;
+  }
+  swap(nut, i, j)
+}
+
+Soln2
+
+partitionBolts(nut[], bolt[], low, high, pivotNut)
+{
+   [low, k) -> less than
+   [k, i) -> equal
+   [i, j) -> unseen
+   [j, high] -> greater than
+
+   i=low;
+   k=low
+   j=high+1;
+
+   while(i<j)
+   {
+      if(bolt[i] < pivotNut)
+      {
+         swap(bolt, i, k)
+         k=k+1
+         i++
+      }
+      if(bolt[i]== pivotNut)
+      {
+         i++
+      }
+      else
+      {
+         swap(bolt, i, j-1)
+         j=j-1
+      }
+   }
+
+   return k
+}
+
+qSort(nut[], bolt[], low, high)
+{
+  if(high<=low)
+    return
+  pivotNut = nut[low]
+  k = partitionBolts(bolt, low, high, pivotNut)
+  pivotBolt = bolt[k]
+  partitionuts(nut, low, high, pivotBolt)
+  qSort(nut, bolt, low, k-1)
+  qSort(nut, bolt, k+1, high)
+}
+
+*/
+public class NutsAndBolts {
+    public static void matchPairs(char nuts[], char bolts[], int low, int high)
+    {
+        if(high<=low)
+            return;
+        char nutPivot = nuts[low];
+        int pivotIndex = partition(bolts, low, high, nutPivot);
+        char boltPivot = bolts[pivotIndex];
+        partition(nuts, low, high, boltPivot);
+        matchPairs(nuts, bolts, low, pivotIndex-1);
+        matchPairs(nuts, bolts, pivotIndex+1, high);
+    }
+    static int partition(char[] array, int low, int high, char pivot)
+    {
+        /*
+        [low, k) - less than pivot
+        [k, i) - == pivot
+        [i, j) - unseen
+        [j, high] - > pivot
+         */
+        int i = low;
+        int j= high+1;
+        int k = i;
+        while(i<j)
+        {
+            if(array[i] < pivot)
+            {
+                swap(array, i, k);
+                i++;
+                k++;
+                continue;
+            }
+
+            if (array[i] == pivot)
+            {
+                i++;
+                continue;
+            }
+
+            swap(array, i, j-1);
+            j=j-1;
+        }
+        return k;
+    }
+    public static void swap(char[] array, int i , int j)
+    {
+        char t = array[i];
+        array[i] = array[j];
+        array[j] = t;
+    }
+    public static void printArray(char[] a)
+    {
+        System.out.println();
+        for(int i=0; i<a.length; i++)
+            System.out.format("%c ", a[i]);
+    }
+    public static void main(String[] args)
+    {
+        // Nuts and bolts are represented as array of characters
+        char nuts[] = {'@', '#', '$', '%', '^', '&'};
+        char bolts[] = {'$', '%', '&', '^', '@', '#'};
+
+        // Method based on quick sort which matches nuts and bolts
+        matchPairs(nuts, bolts, 0, 5);
+
+        System.out.println("Matched nuts and bolts are : ");
+        printArray(nuts);
+        printArray(bolts);
+    }
+}
