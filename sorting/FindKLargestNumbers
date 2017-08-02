@@ -4,7 +4,9 @@
 /*
 
 1) Find k largest elements given n numbers
-   Ans:- Use Quick sort partitioning to find the kth largest number. This takes O(n) time complexity.
+   Ans:- Use Quick sort partitioning to find the kth largest number. 
+         This takes O(n) time complexity in best and avg case, O(n^2) in the worst case.
+         ** Logic is find k largest number -> TC -> n+n/2+n/4+... -> O(n)
          If sorted is needed, sort the numbers from k+1 to n. That will take (n-k)lg(n-k) time complexity
          If no sorting is reqd, then the solution is O(n)
 
