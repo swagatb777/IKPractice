@@ -1,0 +1,53 @@
+/**
+ * Created by swagatb on 8/5/17.
+ */
+/*
+Given an array of integers, find the kth largest number in that array
+int[] array = {6, 2, 6, 1, 4, 9}
+k=2
+int partition(int[] array, int low, int high)
+{
+  pivot = array[low];
+  i=low;
+  j=high;
+  while(i<j)
+  {
+    while(array[i]<=pivot)
+      i++;
+    while(array[j]>pivot)
+      j--;
+    if(i<j)
+    {
+      swap(array, i, j)
+    }
+  }
+
+  swap(array, low, j);
+  return j;
+}
+
+int findKLargest(int[] array, int low, int high, int k)
+{
+  if(high<=low)
+    return -1;
+  int pivotIndex = partition(array, low, high);
+  if(pivotIndex == k)
+    return array[pivotIndex];
+  if(k<pivotIndex)
+    return findKLargest(array, low, pivotIndex-1);
+  else
+    return findKLargest(array, pivotIndex+1, high);
+}
+
+
+Time Complexity analysis:-
+At every recursive step of the findKLargest() we are dividing the array based on the pivotIndex.
+If the pivotIndex divides the array into 2 halves in the best case, then the input size gets divided
+at each step. But we also call the parition function at each step which is a O(input size) operation
+So the time complexity in the best case - O(n+n/2+n/4+n/8+....) ~ O(N)
+
+In the worst case, the tree will be skewed leading to a O(n^2) time complexity.
+
+ */
+public class QuickSortPartitioningKLargestNumber {
+}
