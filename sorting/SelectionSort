@@ -1,8 +1,9 @@
+
 /**
  * Created by swagatb on 7/30/17.
  */
 import java.util.*;
-import java.lang.*;
+        import java.lang.*;
 /*
 1) At every iteration ending with i, elements from index [0 to i] are sorted wrt to entire array
    elements from [i+1, n) are not yet seen -> This also means after ith iteration causes element at index i
@@ -33,4 +34,36 @@ import java.lang.*;
 
  */
 public class SelectionSort {
+
+    public static void swap(int[] array, int a, int b){
+        int temp;
+        temp = array[a];
+        array[a] = array[b];
+        array[b] = temp;
+    }
+
+    public static void main(String[] args){
+        int[] array = {5, 8,1,0,9,3};
+        int n = array.length;
+
+        for(int i = 0; i<n; i++)
+        {
+            int minIndex = i;
+            for(int j=i+1; j<n; j++)
+            {
+                if(array[minIndex] > array[j])
+                    minIndex = j;
+            }
+            swap(array, i, minIndex);
+        }
+
+        //print the array
+        for (int i=0; i<n; i++){
+            System.out.format("%d  ", array[i]);
+        }
+
+
+    }
 }
+
+
